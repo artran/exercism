@@ -1,5 +1,8 @@
 use std::fmt;
 
+const MINS_IN_HOUR: i32 = 60;
+const HRS_IN_DAY: i32 = 24;
+
 #[derive(Debug, PartialEq)]
 pub struct Clock {
     hours: i32,
@@ -14,15 +17,15 @@ impl fmt::Display for Clock {
 
 impl Clock {
     pub fn new(mut hours: i32, mut minutes: i32) -> Self {
-        hours += minutes.div_euclid(60);
-        hours = hours.rem_euclid(24);
-        minutes = minutes.rem_euclid(60);
+        hours += minutes.div_euclid(MINS_IN_HOUR);
+        hours = hours.rem_euclid(HRS_IN_DAY);
+        minutes = minutes.rem_euclid(MINS_IN_HOUR);
 
         Clock { hours, minutes }
     }
 
     pub fn add_minutes(&self, minutes: i32) -> Self {
-        let minutes = self.hours * 60 + self.minutes + minutes;
+        let minutes = self.hours * MINS_IN_HOUR + self.minutes + minutes;
         Clock::new(0, minutes)
     }
 }
