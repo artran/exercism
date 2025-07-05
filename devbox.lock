@@ -2,56 +2,56 @@
   "lockfile_version": "1",
   "packages": {
     "exercism@latest": {
-      "last_modified": "2025-05-16T20:19:48Z",
-      "resolved": "github:NixOS/nixpkgs/12a55407652e04dcf2309436eb06fef0d3713ef3#exercism",
+      "last_modified": "2025-06-20T02:24:11Z",
+      "resolved": "github:NixOS/nixpkgs/076e8c6678d8c54204abcb4b1b14c366835a58bb#exercism",
       "source": "devbox-search",
-      "version": "3.5.4",
+      "version": "3.5.5",
       "systems": {
         "aarch64-darwin": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/l52ad1i5iq77fx9l0yg6jn6zvzq29c09-exercism-3.5.4",
+              "path": "/nix/store/xifpkyxw4wb4hcdwhdy35rnfjfbm61j1-exercism-3.5.5",
               "default": true
             }
           ],
-          "store_path": "/nix/store/l52ad1i5iq77fx9l0yg6jn6zvzq29c09-exercism-3.5.4"
+          "store_path": "/nix/store/xifpkyxw4wb4hcdwhdy35rnfjfbm61j1-exercism-3.5.5"
         },
         "aarch64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/d6b906k2bcx15nmkd5nf96f8gknbiqn6-exercism-3.5.4",
+              "path": "/nix/store/6g3gai2xx86q2smdisl0jaimycl58a94-exercism-3.5.5",
               "default": true
             }
           ],
-          "store_path": "/nix/store/d6b906k2bcx15nmkd5nf96f8gknbiqn6-exercism-3.5.4"
+          "store_path": "/nix/store/6g3gai2xx86q2smdisl0jaimycl58a94-exercism-3.5.5"
         },
         "x86_64-darwin": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/3gx8pkrwlqhrsja1rbp7marf9wjn7lji-exercism-3.5.4",
+              "path": "/nix/store/9s55v3xi8mxpsv33h7n04aag2hmb7pa9-exercism-3.5.5",
               "default": true
             }
           ],
-          "store_path": "/nix/store/3gx8pkrwlqhrsja1rbp7marf9wjn7lji-exercism-3.5.4"
+          "store_path": "/nix/store/9s55v3xi8mxpsv33h7n04aag2hmb7pa9-exercism-3.5.5"
         },
         "x86_64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/k7j7718zm7pb767317577fbcksrag1bj-exercism-3.5.4",
+              "path": "/nix/store/vvn814gdgfcdsxsspfxa562cjqwb2mwx-exercism-3.5.5",
               "default": true
             }
           ],
-          "store_path": "/nix/store/k7j7718zm7pb767317577fbcksrag1bj-exercism-3.5.4"
+          "store_path": "/nix/store/vvn814gdgfcdsxsspfxa562cjqwb2mwx-exercism-3.5.5"
         }
       }
     },
     "github:NixOS/nixpkgs/nixpkgs-unstable": {
-      "last_modified": "2025-06-10T02:39:58Z",
-      "resolved": "github:NixOS/nixpkgs/cdc68935eba9f86d155585fdf6f17af6824f38ac?lastModified=1749523198&narHash=sha256-How2kQw0psKmCdXgojc95Sf3K5maHB3qfINxTZFCAPM%3D"
+      "last_modified": "2025-07-04T10:39:05Z",
+      "resolved": "github:NixOS/nixpkgs/c860cf0b3a0829f0f6cf344ca8de83a2bbfab428?lastModified=1751625545&narHash=sha256-4E7wWftF1ExK5ZEDzj41%2B9mVgxtuRV3wWCId7QAYMAU%3D"
     },
     "github:artran/nvf-flake": {
       "last_modified": "2025-06-06T15:01:08Z",
