@@ -25,7 +25,6 @@ impl Clock {
     }
 
     pub fn add_minutes(&self, minutes: i32) -> Self {
-        let minutes = self.hours * MINS_IN_HOUR + self.minutes + minutes;
-        Clock::new(0, minutes)
+        Clock::new(self.hours, self.minutes + minutes)
     }
 }
