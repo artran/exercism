@@ -22,6 +22,7 @@ impl Clock {
     }
 
     pub fn add_minutes(&self, minutes: i32) -> Self {
-        todo!("Add {minutes} minutes to existing Clock time");
+        let minutes = self.hours * 60 + self.minutes + minutes;
+        Clock::new(0, minutes)
     }
 }
