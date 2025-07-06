@@ -8,12 +8,17 @@ pub fn anagrams_for<'a>(word: &str, possible_anagrams: &[&'a str]) -> HashSet<&'
     let matches = possible_anagrams
         .iter()
         .cloned()
-        .filter(|c| is_anagram(&word_chars, c));
+        .filter(|c| is_anagram(word, &word_chars, c));
 
     HashSet::from_iter(matches)
 }
 
-fn is_anagram(word_chars: &Vec<char>, candidate: &str) -> bool {
+fn is_anagram(word: &str, word_chars: &Vec<char>, candidate: &str) -> bool {
+    // Early return if the candidate is the same as the word
+    if word.to_lowercase() == candidate.to_lowercase() {
+        return false;
+    }
+
     let mut candidate_chars: Vec<char> = candidate.to_lowercase().chars().collect();
     candidate_chars.sort();
 
