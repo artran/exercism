@@ -14,7 +14,7 @@ pub fn anagrams_for<'a>(word: &str, possible_anagrams: &[&'a str]) -> HashSet<&'
 
 fn get_sorted(word: &str) -> Vec<char> {
     let mut word_chars: Vec<char> = word.to_lowercase().chars().collect();
-    word_chars.sort();
+    word_chars.sort_unstable();
 
     word_chars
 }
@@ -25,5 +25,5 @@ fn is_anagram(word: &str, word_chars: &Vec<char>, candidate: &str) -> bool {
         return false;
     }
 
-    get_sorted(candidate) == *word_chars
+    *word_chars == get_sorted(candidate)
 }
