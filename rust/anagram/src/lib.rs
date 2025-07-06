@@ -2,7 +2,7 @@ use std::collections::HashSet;
 
 pub fn anagrams_for<'a>(word: &str, possible_anagrams: &[&'a str]) -> HashSet<&'a str> {
     // Let's calculate this only once
-    let mut word_chars: Vec<char> = word.chars().collect();
+    let mut word_chars: Vec<char> = word.to_lowercase().chars().collect();
     word_chars.sort();
 
     let matches = possible_anagrams
@@ -14,7 +14,7 @@ pub fn anagrams_for<'a>(word: &str, possible_anagrams: &[&'a str]) -> HashSet<&'
 }
 
 fn is_anagram(word_chars: &Vec<char>, candidate: &str) -> bool {
-    let mut candidate_chars: Vec<char> = candidate.chars().collect();
+    let mut candidate_chars: Vec<char> = candidate.to_lowercase().chars().collect();
     candidate_chars.sort();
 
     candidate_chars == *word_chars
