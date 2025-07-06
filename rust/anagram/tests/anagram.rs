@@ -11,7 +11,6 @@ fn no_matches() {
 }
 
 #[test]
-#[ignore]
 fn detects_two_anagrams() {
     let word = "solemn";
     let inputs = &["lemons", "cherry", "melons"];
@@ -21,7 +20,6 @@ fn detects_two_anagrams() {
 }
 
 #[test]
-#[ignore]
 fn does_not_detect_anagram_subsets() {
     let word = "good";
     let inputs = &["dog", "goody"];
@@ -31,7 +29,6 @@ fn does_not_detect_anagram_subsets() {
 }
 
 #[test]
-#[ignore]
 fn detects_anagram() {
     let word = "listen";
     let inputs = &["enlists", "google", "inlets", "banana"];
@@ -41,7 +38,6 @@ fn detects_anagram() {
 }
 
 #[test]
-#[ignore]
 fn detects_three_anagrams() {
     let word = "allergy";
     let inputs = &[
