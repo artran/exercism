@@ -9,7 +9,6 @@ fn no_rows() {
 }
 
 #[test]
-#[ignore]
 fn no_columns() {
     let input = &[""];
     let expected = &[""];
