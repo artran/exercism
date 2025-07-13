@@ -50,12 +50,60 @@
       }
     },
     "github:NixOS/nixpkgs/nixpkgs-unstable": {
-      "last_modified": "2025-07-08T22:16:38Z",
-      "resolved": "github:NixOS/nixpkgs/2a2130494ad647f953593c4e84ea4df839fbd68c?lastModified=1752012998&narHash=sha256-Q82Ms%2BFQmgOBkdoSVm%2BFBpuFoeUAffNerR5yVV7SgT8%3D"
+      "last_modified": "2025-07-09T16:14:05Z",
+      "resolved": "github:NixOS/nixpkgs/be9e214982e20b8310878ac2baa063a961c1bdf6?lastModified=1752077645&narHash=sha256-HM791ZQtXV93xtCY%2BZxG1REzhQenSQO020cu6rHtAPk%3D"
     },
     "github:artran/nvf-flake": {
       "last_modified": "2025-07-12T20:28:21Z",
       "resolved": "github:artran/nvf-flake/acc6c78d0ad8b57afe8b855e1aa02db807928767?lastModified=1752352101&narHash=sha256-%2Fhw%2FDY0Thsv%2BXT4lkqxW9%2BKT9p9L00mk8HYxUmkdyw0%3D"
+    },
+    "jujutsu@latest": {
+      "last_modified": "2025-07-04T02:32:11Z",
+      "resolved": "github:NixOS/nixpkgs/472908faa934435cf781ae8fac77291af3d137d3#jujutsu",
+      "source": "devbox-search",
+      "version": "0.31.0",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/w2gin1ss01l630w15nblagrfswfx6120-jujutsu-0.31.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/w2gin1ss01l630w15nblagrfswfx6120-jujutsu-0.31.0"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/h2l9vizslcll3h4vp9vz066qh51262g1-jujutsu-0.31.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/h2l9vizslcll3h4vp9vz066qh51262g1-jujutsu-0.31.0"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/132mgl2ryxipv0wgs6zhkfi2wpkdp8kk-jujutsu-0.31.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/132mgl2ryxipv0wgs6zhkfi2wpkdp8kk-jujutsu-0.31.0"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/pilvrncp4zwkzg7j5ilngp6xn78s68k7-jujutsu-0.31.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/pilvrncp4zwkzg7j5ilngp6xn78s68k7-jujutsu-0.31.0"
+        }
+      }
     }
   }
 }
