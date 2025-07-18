@@ -2,8 +2,8 @@
   "lockfile_version": "1",
   "packages": {
     "exercism@latest": {
-      "last_modified": "2025-07-08T04:39:49Z",
-      "resolved": "github:NixOS/nixpkgs/9b008d60392981ad674e04016d25619281550a9d#exercism",
+      "last_modified": "2025-07-13T22:45:35Z",
+      "resolved": "github:NixOS/nixpkgs/a421ac6595024edcfbb1ef950a3712b89161c359#exercism",
       "source": "devbox-search",
       "version": "3.5.6",
       "systems": {
@@ -11,55 +11,51 @@
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/b7q6q3x03213z90y06dz7kry0zzdg4g2-exercism-3.5.6",
+              "path": "/nix/store/hh7jfqi8ac609dnd2hpp8ihs4hilc4qr-exercism-3.5.6",
               "default": true
             }
           ],
-          "store_path": "/nix/store/b7q6q3x03213z90y06dz7kry0zzdg4g2-exercism-3.5.6"
+          "store_path": "/nix/store/hh7jfqi8ac609dnd2hpp8ihs4hilc4qr-exercism-3.5.6"
         },
         "aarch64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/6pxc2y7zvw742m4ws73fv8w3b4pvkjp6-exercism-3.5.6",
+              "path": "/nix/store/75js2c9f49irpl6ancxzz15xhmvpnvvh-exercism-3.5.6",
               "default": true
             }
           ],
-          "store_path": "/nix/store/6pxc2y7zvw742m4ws73fv8w3b4pvkjp6-exercism-3.5.6"
+          "store_path": "/nix/store/75js2c9f49irpl6ancxzz15xhmvpnvvh-exercism-3.5.6"
         },
         "x86_64-darwin": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/0ikh65czqbswgjsf0zwy92n5c33cdsp1-exercism-3.5.6",
+              "path": "/nix/store/ihqyzc3x3m3p98g07f64q8v2pza4362y-exercism-3.5.6",
               "default": true
             }
           ],
-          "store_path": "/nix/store/0ikh65czqbswgjsf0zwy92n5c33cdsp1-exercism-3.5.6"
+          "store_path": "/nix/store/ihqyzc3x3m3p98g07f64q8v2pza4362y-exercism-3.5.6"
         },
         "x86_64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/f18406wakiv1sfq3jplg88sprw2rkrvy-exercism-3.5.6",
+              "path": "/nix/store/71nhpkrkkhkxd6zvwr5rdia26q9slq1v-exercism-3.5.6",
               "default": true
             }
           ],
-          "store_path": "/nix/store/f18406wakiv1sfq3jplg88sprw2rkrvy-exercism-3.5.6"
+          "store_path": "/nix/store/71nhpkrkkhkxd6zvwr5rdia26q9slq1v-exercism-3.5.6"
         }
       }
     },
     "github:NixOS/nixpkgs/nixpkgs-unstable": {
-      "last_modified": "2025-07-09T16:14:05Z",
-      "resolved": "github:NixOS/nixpkgs/be9e214982e20b8310878ac2baa063a961c1bdf6?lastModified=1752077645&narHash=sha256-HM791ZQtXV93xtCY%2BZxG1REzhQenSQO020cu6rHtAPk%3D"
-    },
-    "github:artran/nvf-flake": {
-      "last_modified": "2025-07-12T20:28:21Z",
-      "resolved": "github:artran/nvf-flake/acc6c78d0ad8b57afe8b855e1aa02db807928767?lastModified=1752352101&narHash=sha256-%2Fhw%2FDY0Thsv%2BXT4lkqxW9%2BKT9p9L00mk8HYxUmkdyw0%3D"
+      "last_modified": "2025-07-17T10:11:59Z",
+      "resolved": "github:NixOS/nixpkgs/fa0ef8a6bb1651aa26c939aeb51b5f499e86b0ec?lastModified=1752747119&narHash=sha256-2Kp9St3Pbsmu%2BxMsobLcgzzUxPvZR7alVJWyuk2BAPc%3D"
     },
     "jujutsu@latest": {
-      "last_modified": "2025-07-04T02:32:11Z",
-      "resolved": "github:NixOS/nixpkgs/472908faa934435cf781ae8fac77291af3d137d3#jujutsu",
+      "last_modified": "2025-07-16T16:36:02Z",
+      "resolved": "github:NixOS/nixpkgs/fa64ec5c1ca6f17746f3defedb988b9248e97616#jujutsu",
       "source": "devbox-search",
       "version": "0.31.0",
       "systems": {
@@ -67,41 +63,41 @@
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/w2gin1ss01l630w15nblagrfswfx6120-jujutsu-0.31.0",
+              "path": "/nix/store/421n0azh9f81a022ag7lrzs4hihk6l7r-jujutsu-0.31.0",
               "default": true
             }
           ],
-          "store_path": "/nix/store/w2gin1ss01l630w15nblagrfswfx6120-jujutsu-0.31.0"
+          "store_path": "/nix/store/421n0azh9f81a022ag7lrzs4hihk6l7r-jujutsu-0.31.0"
         },
         "aarch64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/h2l9vizslcll3h4vp9vz066qh51262g1-jujutsu-0.31.0",
+              "path": "/nix/store/rsqa26608gnnxblm3c7ckxghqnh7wd56-jujutsu-0.31.0",
               "default": true
             }
           ],
-          "store_path": "/nix/store/h2l9vizslcll3h4vp9vz066qh51262g1-jujutsu-0.31.0"
+          "store_path": "/nix/store/rsqa26608gnnxblm3c7ckxghqnh7wd56-jujutsu-0.31.0"
         },
         "x86_64-darwin": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/132mgl2ryxipv0wgs6zhkfi2wpkdp8kk-jujutsu-0.31.0",
+              "path": "/nix/store/zkjy092v2x4pj4qmbf79h71kn2rz3jwa-jujutsu-0.31.0",
               "default": true
             }
           ],
-          "store_path": "/nix/store/132mgl2ryxipv0wgs6zhkfi2wpkdp8kk-jujutsu-0.31.0"
+          "store_path": "/nix/store/zkjy092v2x4pj4qmbf79h71kn2rz3jwa-jujutsu-0.31.0"
         },
         "x86_64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/pilvrncp4zwkzg7j5ilngp6xn78s68k7-jujutsu-0.31.0",
+              "path": "/nix/store/kr3rxgmzxny2yln266vr3c7a9ax74y8j-jujutsu-0.31.0",
               "default": true
             }
           ],
-          "store_path": "/nix/store/pilvrncp4zwkzg7j5ilngp6xn78s68k7-jujutsu-0.31.0"
+          "store_path": "/nix/store/kr3rxgmzxny2yln266vr3c7a9ax74y8j-jujutsu-0.31.0"
         }
       }
     }
