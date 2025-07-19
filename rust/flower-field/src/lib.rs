@@ -1,5 +1,19 @@
 pub fn annotate(garden: &[&str]) -> Vec<String> {
-    let mut annotated: Vec<String> = Vec::new();
+    garden
+        .iter()
+        .enumerate()
+        .map(|(r, row)| {
+            row.bytes()
+                .enumerate()
+                .map(|(c, letter)| match letter {
+                    b'*' => '*',
+                    _ => count_neighbours(r, c),
+                })
+                .collect()
+        })
+        .collect()
+}
 
-    annotated
+fn count_neighbours(r: usize, c: usize) -> char {
+    ' '
 }
