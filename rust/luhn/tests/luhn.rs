@@ -6,61 +6,51 @@ fn single_digit_strings_can_not_be_valid() {
 }
 
 #[test]
-#[ignore]
 fn a_single_zero_is_invalid() {
     assert!(!is_valid("0"));
 }
 
 #[test]
-#[ignore]
 fn a_simple_valid_sin_that_remains_valid_if_reversed() {
     assert!(is_valid("059"));
 }
 
 #[test]
-#[ignore]
 fn a_simple_valid_sin_that_becomes_invalid_if_reversed() {
     assert!(is_valid("59"));
 }
 
 #[test]
-#[ignore]
 fn a_valid_canadian_sin() {
     assert!(is_valid("055 444 285"));
 }
 
 #[test]
-#[ignore]
 fn invalid_canadian_sin() {
     assert!(!is_valid("055 444 286"));
 }
 
 #[test]
-#[ignore]
 fn invalid_credit_card() {
     assert!(!is_valid("8273 1232 7352 0569"));
 }
 
 #[test]
-#[ignore]
 fn invalid_long_number_with_an_even_remainder() {
     assert!(!is_valid("1 2345 6789 1234 5678 9012"));
 }
 
 #[test]
-#[ignore]
 fn invalid_long_number_with_a_remainder_divisible_by_5() {
     assert!(!is_valid("1 2345 6789 1234 5678 9013"));
 }
 
 #[test]
-#[ignore]
 fn valid_number_with_an_even_number_of_digits() {
     assert!(is_valid("095 245 88"));
 }
 
 #[test]
-#[ignore]
 fn valid_number_with_an_odd_number_of_spaces() {
     assert!(is_valid("234 567 891 234"));
 }
@@ -84,31 +74,26 @@ fn valid_strings_with_symbols_included_become_invalid() {
 }
 
 #[test]
-#[ignore]
 fn single_zero_with_space_is_invalid() {
     assert!(!is_valid(" 0"));
 }
 
 #[test]
-#[ignore]
 fn more_than_a_single_zero_is_valid() {
     assert!(is_valid("0000 0"));
 }
 
 #[test]
-#[ignore]
 fn input_digit_9_is_correctly_converted_to_output_digit_9() {
     assert!(is_valid("091"));
 }
 
 #[test]
-#[ignore]
 fn very_long_input_is_valid() {
     assert!(is_valid("9999999999 9999999999 9999999999 9999999999"));
 }
 
 #[test]
-#[ignore]
 fn valid_luhn_with_an_odd_number_of_digits_and_non_zero_first_digit() {
     assert!(is_valid("109"));
 }
