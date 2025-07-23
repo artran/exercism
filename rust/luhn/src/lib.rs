@@ -1,11 +1,16 @@
+use regex_lite::Regex;
+
+
 /// Check a Luhn checksum.
 pub fn is_valid(code: &str) -> bool {
+    let valid_luhn_re = Regex::new(r"^\d\d+$").unwrap();
+
     let cleaned: String = code.chars()
         .filter(|&c| !c.is_whitespace())
         .rev()
         .collect();
 
-    if cleaned.len() <= 1 {
+    if !valid_luhn_re.is_match(&cleaned) {
         return false;
     }
 

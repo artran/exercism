@@ -56,19 +56,16 @@ fn valid_number_with_an_odd_number_of_spaces() {
 }
 
 #[test]
-#[ignore]
 fn valid_strings_with_a_non_digit_added_at_the_end_become_invalid() {
     assert!(!is_valid("059a"));
 }
 
 #[test]
-#[ignore]
 fn valid_strings_with_punctuation_included_become_invalid() {
     assert!(!is_valid("055-444-285"));
 }
 
 #[test]
-#[ignore]
 fn valid_strings_with_symbols_included_become_invalid() {
     assert!(!is_valid("055# 444$ 285"));
 }
@@ -99,19 +96,16 @@ fn valid_luhn_with_an_odd_number_of_digits_and_non_zero_first_digit() {
 }
 
 #[test]
-#[ignore]
 fn using_ascii_value_for_non_doubled_non_digit_isn_t_allowed() {
     assert!(!is_valid("055b 444 285"));
 }
 
 #[test]
-#[ignore]
 fn using_ascii_value_for_doubled_non_digit_isn_t_allowed() {
     assert!(!is_valid(":9"));
 }
 
 #[test]
-#[ignore]
 fn non_numeric_non_space_char_in_the_middle_with_a_sum_that_s_divisible_by_10_isn_t_allowed() {
     assert!(!is_valid("59%59"));
 }
