@@ -1,39 +1,40 @@
-use regex_lite::Regex;
-
-
 /// Check a Luhn checksum.
 pub fn is_valid(code: &str) -> bool {
-    let valid_luhn_re = Regex::new(r"^\d\d+$").unwrap();
-
-    let cleaned: String = code.chars()
-        .filter(|&c| !c.is_whitespace())
+    // Process characters from right to left, skipping whitespace.
+    // 'try_fold' allows us to calculate the sum while also handling invalid characters.
+    let luhn_result = code
+        .chars()
         .rev()
-        .collect();
-
-    if !valid_luhn_re.is_match(&cleaned) {
-        return false;
-    }
-
-    let luhn: u32 = cleaned.chars()
+        .filter(|c| !c.is_whitespace())
         .enumerate()
-        .map(|(i, c)| {
-            let x = c.to_digit(10).unwrap();
-            if i % 2 == 0 {
-                x
-            } else {
-                double_digit_with_restriction(x)
-            }
-        })
-        .sum();
+        // Use a two-tuple to track the luhn sum and the character count
+        .try_fold((0, 0), |(sum, count), (index, c)| {
+            c.to_digit(10)
+                .map(|digit| {
+                    let term = if index % 2 == 1 {
+                        double_digit_with_restriction(digit)
+                    } else {
+                        digit
+                    };
+                    (sum + term, count + 1)
+                })
+        });
 
-    luhn % 10 == 0
+    // The final result is valid if:
+    // 1. No invalid characters were found (luhn_result is Some).
+    // 2. The length is greater than 1.
+    // 3. The sum is divisible by 10.
+    match luhn_result {
+        Some((sum, count)) if count > 1 => sum % 10 == 0,
+        _ => false,
+    }
 }
 
 fn double_digit_with_restriction(x: u32) -> u32 {
     let doubled = x * 2;
     if doubled > 9 {
-        return doubled - 9
+        doubled - 9
+    } else {
+        doubled
     }
-
-    doubled
 }
