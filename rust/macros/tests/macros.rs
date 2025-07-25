@@ -8,14 +8,13 @@ fn empty() {
     assert_eq!(computed, expected);
 }
 
-// #[test]
-// #[ignore]
-// fn single() {
-//     let mut expected = HashMap::new();
-//     expected.insert(1, "one");
-//     assert_eq!(hashmap!(1 => "one"), expected);
-// }
-//
+#[test]
+fn single() {
+    let mut expected = HashMap::new();
+    expected.insert(1, "one");
+    assert_eq!(hashmap!(1 => "one"), expected);
+}
+
 // #[test]
 // #[ignore]
 // fn no_trailing_comma() {
