@@ -50,12 +50,12 @@
       }
     },
     "github:NixOS/nixpkgs/nixpkgs-unstable": {
-      "last_modified": "2025-07-20T07:42:04Z",
-      "resolved": "github:NixOS/nixpkgs/7c688a0875df5a8c28a53fb55ae45e94eae0dddb?lastModified=1752997324&narHash=sha256-vtTM4oDke3SeDj%2B1ey6DjmzXdq8ZZSCLWSaApADDvIE%3D"
+      "last_modified": "2025-07-24T23:24:55Z",
+      "resolved": "github:NixOS/nixpkgs/0d00f23f023b7215b3f1035adb5247c8ec180dbc?lastModified=1753399495&narHash=sha256-7XG%2FQBqhrYOyA2houjRTL2NMa7IKZZ%2FsomBqr%2BQ%2F6Wo%3D"
     },
     "jujutsu@latest": {
-      "last_modified": "2025-07-16T16:36:02Z",
-      "resolved": "github:NixOS/nixpkgs/fa64ec5c1ca6f17746f3defedb988b9248e97616#jujutsu",
+      "last_modified": "2025-07-21T09:58:03Z",
+      "resolved": "github:NixOS/nixpkgs/2baf8e1658cba84a032c3a8befb1e7b06629242a#jujutsu",
       "source": "devbox-search",
       "version": "0.31.0",
       "systems": {
@@ -63,41 +63,41 @@
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/421n0azh9f81a022ag7lrzs4hihk6l7r-jujutsu-0.31.0",
+              "path": "/nix/store/agpxjvdwqdkhgx3xzw5h62s2a1sxh344-jujutsu-0.31.0",
               "default": true
             }
           ],
-          "store_path": "/nix/store/421n0azh9f81a022ag7lrzs4hihk6l7r-jujutsu-0.31.0"
+          "store_path": "/nix/store/agpxjvdwqdkhgx3xzw5h62s2a1sxh344-jujutsu-0.31.0"
         },
         "aarch64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/rsqa26608gnnxblm3c7ckxghqnh7wd56-jujutsu-0.31.0",
+              "path": "/nix/store/hf1bjx8x3vdc8d3da8zhyscw97iwf1zm-jujutsu-0.31.0",
               "default": true
             }
           ],
-          "store_path": "/nix/store/rsqa26608gnnxblm3c7ckxghqnh7wd56-jujutsu-0.31.0"
+          "store_path": "/nix/store/hf1bjx8x3vdc8d3da8zhyscw97iwf1zm-jujutsu-0.31.0"
         },
         "x86_64-darwin": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/zkjy092v2x4pj4qmbf79h71kn2rz3jwa-jujutsu-0.31.0",
+              "path": "/nix/store/yl5r970g26bi5cj6wq6gl62in835kvfi-jujutsu-0.31.0",
               "default": true
             }
           ],
-          "store_path": "/nix/store/zkjy092v2x4pj4qmbf79h71kn2rz3jwa-jujutsu-0.31.0"
+          "store_path": "/nix/store/yl5r970g26bi5cj6wq6gl62in835kvfi-jujutsu-0.31.0"
         },
         "x86_64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/kr3rxgmzxny2yln266vr3c7a9ax74y8j-jujutsu-0.31.0",
+              "path": "/nix/store/5dzs7372z9j8bhbwixqwzv5b97kha469-jujutsu-0.31.0",
               "default": true
             }
           ],
-          "store_path": "/nix/store/kr3rxgmzxny2yln266vr3c7a9ax74y8j-jujutsu-0.31.0"
+          "store_path": "/nix/store/5dzs7372z9j8bhbwixqwzv5b97kha469-jujutsu-0.31.0"
         }
       }
     }
