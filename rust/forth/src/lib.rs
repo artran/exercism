@@ -1,7 +1,9 @@
 pub type Value = i32;
 pub type Result = std::result::Result<(), Error>;
 
-pub struct Forth;
+pub struct Forth {
+    data: Vec<Value>,
+}
 
 #[derive(Debug, PartialEq, Eq)]
 pub enum Error {
@@ -13,14 +15,17 @@ pub enum Error {
 
 impl Forth {
     pub fn new() -> Forth {
-        todo!()
+        Forth { data: Vec::new() }
     }
 
     pub fn stack(&self) -> &[Value] {
-        todo!()
+        &self.data
     }
 
     pub fn eval(&mut self, input: &str) -> Result {
-        todo!("result of evaluating '{input}'")
+        input.split_whitespace().for_each(|token| {
+            self.data.push(token.parse().unwrap());
+        });
+        Ok(())
     }
 }
