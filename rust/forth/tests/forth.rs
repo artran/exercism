@@ -9,7 +9,6 @@ mod parsing_and_numbers {
     }
 
     #[test]
-    #[ignore]
     fn pushes_negative_numbers_onto_the_stack() {
         let mut f = Forth::new();
         assert!(f.eval("-1 -2 -3 -4 -5").is_ok());
