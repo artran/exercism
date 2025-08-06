@@ -209,7 +209,6 @@ mod drop {
     use forth::*;
 
     #[test]
-    #[ignore]
     fn removes_the_top_value_on_the_stack_if_it_is_the_only_one() {
         let mut f = Forth::new();
         assert!(f.eval("1 drop").is_ok());
@@ -217,7 +216,6 @@ mod drop {
     }
 
     #[test]
-    #[ignore]
     fn removes_the_top_value_on_the_stack_if_it_is_not_the_only_one() {
         let mut f = Forth::new();
         assert!(f.eval("1 2 drop").is_ok());
@@ -225,7 +223,6 @@ mod drop {
     }
 
     #[test]
-    #[ignore]
     fn errors_if_there_is_nothing_on_the_stack() {
         let mut f = Forth::new();
         assert_eq!(f.eval("drop"), Err(Error::StackUnderflow));

@@ -37,6 +37,7 @@ impl Forth {
                 "*" => return self.multiply(),
                 "/" => return self.divide(),
                 "dup" => return self.dup(),
+                "drop" => return self.drop(),
                 _ => return Err(Error::InvalidWord),
             },
         }
@@ -93,6 +94,13 @@ impl Forth {
         if let Some(first) = self.data.pop() {
             self.data.push(first);
             self.data.push(first);
+            return Ok(());
+        }
+        Err(Error::StackUnderflow)
+    }
+
+    fn drop(&mut self) -> Result {
+        if self.data.pop().is_some() {
             return Ok(());
         }
         Err(Error::StackUnderflow)
