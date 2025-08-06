@@ -13,14 +13,6 @@ pub enum Error {
     InvalidWord,
 }
 
-#[derive(Debug, PartialEq, Eq)]
-enum Operation {
-    Add,
-    Subtract,
-    Multiply,
-    Divide,
-}
-
 impl Forth {
     pub fn new() -> Forth {
         Forth { data: Vec::new() }
@@ -38,40 +30,28 @@ impl Forth {
 
     fn evaluate_token(&mut self, token: &str) -> Result {
         match token {
-            "+" => self.calculate(Operation::Add),
-            "-" => self.calculate(Operation::Subtract),
-            "*" => self.calculate(Operation::Multiply),
-            "/" => self.calculate(Operation::Divide),
+            "+" => self.calculate(i32::checked_add),
+            "-" => self.calculate(i32::checked_sub),
+            "*" => self.calculate(i32::checked_mul),
+            "/" => self.calculate(i32::checked_div),
             "dup" => self.dup(),
             "drop" => self.drop(),
             _ => self.try_numeric(token),
         }
     }
 
-    fn calculate(&mut self, operation: Operation) -> Result {
+    fn calculate<F>(&mut self, operation: F) -> Result
+    where
+        F: Fn(i32, i32) -> Option<i32>,
+    {
         if let Some(first) = self.data.pop() {
             if let Some(second) = self.data.pop() {
-                match operation {
-                    Operation::Add => {
-                        self.data.push(second + first);
-                        return Ok(());
-                    }
-                    Operation::Subtract => {
-                        self.data.push(second - first);
-                        return Ok(());
-                    }
-                    Operation::Multiply => {
-                        self.data.push(second * first);
-                        return Ok(());
-                    }
-                    Operation::Divide => {
-                        if first != 0 {
-                            self.data.push(second / first);
-                            return Ok(());
-                        } else {
-                            return Err(Error::DivisionByZero);
-                        }
-                    }
+                if let Some(result) = operation(second, first) {
+                    self.data.push(result);
+                    return Ok(());
+                } else {
+                    // Only handling DivisionByZero because that is all required
+                    return Err(Error::DivisionByZero);
                 }
             }
         }
