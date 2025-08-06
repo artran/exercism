@@ -36,6 +36,7 @@ impl Forth {
                 "-" => return self.subtract(),
                 "*" => return self.multiply(),
                 "/" => return self.divide(),
+                "dup" => return self.dup(),
                 _ => return Err(Error::InvalidWord),
             },
         }
@@ -84,6 +85,15 @@ impl Forth {
                     return Err(Error::DivisionByZero);
                 }
             }
+        }
+        Err(Error::StackUnderflow)
+    }
+
+    fn dup(&mut self) -> Result {
+        if let Some(first) = self.data.pop() {
+            self.data.push(first);
+            self.data.push(first);
+            return Ok(());
         }
         Err(Error::StackUnderflow)
     }

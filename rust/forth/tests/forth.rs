@@ -185,7 +185,6 @@ mod dup {
     use forth::*;
 
     #[test]
-    #[ignore]
     fn copies_a_value_on_the_stack() {
         let mut f = Forth::new();
         assert!(f.eval("1 dup").is_ok());
@@ -193,7 +192,6 @@ mod dup {
     }
 
     #[test]
-    #[ignore]
     fn copies_the_top_value_on_the_stack() {
         let mut f = Forth::new();
         assert!(f.eval("1 2 dup").is_ok());
@@ -201,7 +199,6 @@ mod dup {
     }
 
     #[test]
-    #[ignore]
     fn errors_if_there_is_nothing_on_the_stack() {
         let mut f = Forth::new();
         assert_eq!(f.eval("dup"), Err(Error::StackUnderflow));
