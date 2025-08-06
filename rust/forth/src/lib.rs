@@ -13,6 +13,14 @@ pub enum Error {
     InvalidWord,
 }
 
+#[derive(Debug, PartialEq, Eq)]
+enum Operation {
+    Add,
+    Subtract,
+    Multiply,
+    Divide,
+}
+
 impl Forth {
     pub fn new() -> Forth {
         Forth { data: Vec::new() }
@@ -30,55 +38,40 @@ impl Forth {
 
     fn evaluate_token(&mut self, token: &str) -> Result {
         match token {
-            "+" => self.add(),
-            "-" => self.subtract(),
-            "*" => self.multiply(),
-            "/" => self.divide(),
+            "+" => self.calculate(Operation::Add),
+            "-" => self.calculate(Operation::Subtract),
+            "*" => self.calculate(Operation::Multiply),
+            "/" => self.calculate(Operation::Divide),
             "dup" => self.dup(),
             "drop" => self.drop(),
             _ => self.try_numeric(token),
         }
     }
 
-    // TODO: Refactor to DRY the code
-    fn add(&mut self) -> Result {
+    fn calculate(&mut self, operation: Operation) -> Result {
         if let Some(first) = self.data.pop() {
             if let Some(second) = self.data.pop() {
-                self.data.push(first + second);
-                return Ok(());
-            }
-        }
-        Err(Error::StackUnderflow)
-    }
-
-    fn subtract(&mut self) -> Result {
-        if let Some(first) = self.data.pop() {
-            if let Some(second) = self.data.pop() {
-                self.data.push(second - first);
-                return Ok(());
-            }
-        }
-        Err(Error::StackUnderflow)
-    }
-
-    fn multiply(&mut self) -> Result {
-        if let Some(first) = self.data.pop() {
-            if let Some(second) = self.data.pop() {
-                self.data.push(first * second);
-                return Ok(());
-            }
-        }
-        Err(Error::StackUnderflow)
-    }
-
-    fn divide(&mut self) -> Result {
-        if let Some(first) = self.data.pop() {
-            if let Some(second) = self.data.pop() {
-                if first != 0 {
-                    self.data.push(second / first);
-                    return Ok(());
-                } else {
-                    return Err(Error::DivisionByZero);
+                match operation {
+                    Operation::Add => {
+                        self.data.push(second + first);
+                        return Ok(());
+                    }
+                    Operation::Subtract => {
+                        self.data.push(second - first);
+                        return Ok(());
+                    }
+                    Operation::Multiply => {
+                        self.data.push(second * first);
+                        return Ok(());
+                    }
+                    Operation::Divide => {
+                        if first != 0 {
+                            self.data.push(second / first);
+                            return Ok(());
+                        } else {
+                            return Err(Error::DivisionByZero);
+                        }
+                    }
                 }
             }
         }
