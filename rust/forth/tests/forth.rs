@@ -50,7 +50,6 @@ mod subtraction {
     use forth::*;
 
     #[test]
-    #[ignore]
     fn can_subtract_two_numbers() {
         let mut f = Forth::new();
         assert!(f.eval("3 4 -").is_ok());
@@ -58,21 +57,18 @@ mod subtraction {
     }
 
     #[test]
-    #[ignore]
     fn errors_if_there_is_nothing_on_the_stack() {
         let mut f = Forth::new();
         assert_eq!(f.eval("-"), Err(Error::StackUnderflow));
     }
 
     #[test]
-    #[ignore]
     fn errors_if_there_is_only_one_value_on_the_stack() {
         let mut f = Forth::new();
         assert_eq!(f.eval("1 -"), Err(Error::StackUnderflow));
     }
 
     #[test]
-    #[ignore]
     fn more_than_two_values_on_the_stack() {
         let mut f = Forth::new();
         assert!(f.eval("1 12 3 -").is_ok());
@@ -84,7 +80,6 @@ mod multiplication {
     use forth::*;
 
     #[test]
-    #[ignore]
     fn can_multiply_two_numbers() {
         let mut f = Forth::new();
         assert!(f.eval("2 4 *").is_ok());
@@ -92,21 +87,18 @@ mod multiplication {
     }
 
     #[test]
-    #[ignore]
     fn errors_if_there_is_nothing_on_the_stack() {
         let mut f = Forth::new();
         assert_eq!(f.eval("*"), Err(Error::StackUnderflow));
     }
 
     #[test]
-    #[ignore]
     fn errors_if_there_is_only_one_value_on_the_stack() {
         let mut f = Forth::new();
         assert_eq!(f.eval("1 *"), Err(Error::StackUnderflow));
     }
 
     #[test]
-    #[ignore]
     fn more_than_two_values_on_the_stack() {
         let mut f = Forth::new();
         assert!(f.eval("1 2 3 *").is_ok());

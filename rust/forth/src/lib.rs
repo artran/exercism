@@ -33,6 +33,8 @@ impl Forth {
             Ok(c) => self.data.push(c),
             Err(_) => match token {
                 "+" => return self.add(),
+                "-" => return self.subtract(),
+                "*" => return self.multiply(),
                 _ => return Err(Error::InvalidWord),
             },
         }
@@ -40,10 +42,31 @@ impl Forth {
         Ok(())
     }
 
+    // TODO: Refactor to DRY the code
     fn add(&mut self) -> Result {
         if let Some(first) = self.data.pop() {
             if let Some(second) = self.data.pop() {
                 self.data.push(first + second);
+                return Ok(());
+            }
+        }
+        Err(Error::StackUnderflow)
+    }
+
+    fn subtract(&mut self) -> Result {
+        if let Some(first) = self.data.pop() {
+            if let Some(second) = self.data.pop() {
+                self.data.push(second - first);
+                return Ok(());
+            }
+        }
+        Err(Error::StackUnderflow)
+    }
+
+    fn multiply(&mut self) -> Result {
+        if let Some(first) = self.data.pop() {
+            if let Some(second) = self.data.pop() {
+                self.data.push(first * second);
                 return Ok(());
             }
         }
