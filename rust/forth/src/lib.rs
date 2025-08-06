@@ -23,9 +23,17 @@ impl Forth {
     }
 
     pub fn eval(&mut self, input: &str) -> Result {
-        input.split_whitespace().for_each(|token| {
-            self.data.push(token.parse().unwrap());
-        });
+        input
+            .split_whitespace()
+            .try_for_each(|token| self.evaluate_token(token))
+    }
+
+    fn evaluate_token(&mut self, token: &str) -> Result {
+        match token.parse::<i32>() {
+            Ok(c) => self.data.push(c),
+            Err(_) => return Err(Error::StackUnderflow),
+        }
+
         Ok(())
     }
 }

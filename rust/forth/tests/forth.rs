@@ -20,7 +20,6 @@ mod addition {
     use forth::*;
 
     #[test]
-    #[ignore]
     fn can_add_two_numbers() {
         let mut f = Forth::new();
         assert!(f.eval("1 2 +").is_ok());
@@ -28,21 +27,18 @@ mod addition {
     }
 
     #[test]
-    #[ignore]
     fn errors_if_there_is_nothing_on_the_stack() {
         let mut f = Forth::new();
         assert_eq!(f.eval("+"), Err(Error::StackUnderflow));
     }
 
     #[test]
-    #[ignore]
     fn errors_if_there_is_only_one_value_on_the_stack() {
         let mut f = Forth::new();
         assert_eq!(f.eval("1 +"), Err(Error::StackUnderflow));
     }
 
     #[test]
-    #[ignore]
     fn more_than_two_values_on_the_stack() {
         let mut f = Forth::new();
         assert!(f.eval("1 2 3 +").is_ok());
