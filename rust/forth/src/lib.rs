@@ -29,20 +29,15 @@ impl Forth {
     }
 
     fn evaluate_token(&mut self, token: &str) -> Result {
-        match token.parse::<i32>() {
-            Ok(c) => self.data.push(c),
-            Err(_) => match token {
-                "+" => return self.add(),
-                "-" => return self.subtract(),
-                "*" => return self.multiply(),
-                "/" => return self.divide(),
-                "dup" => return self.dup(),
-                "drop" => return self.drop(),
-                _ => return Err(Error::InvalidWord),
-            },
+        match token {
+            "+" => self.add(),
+            "-" => self.subtract(),
+            "*" => self.multiply(),
+            "/" => self.divide(),
+            "dup" => self.dup(),
+            "drop" => self.drop(),
+            _ => self.try_numeric(token),
         }
-
-        Ok(())
     }
 
     // TODO: Refactor to DRY the code
@@ -104,5 +99,15 @@ impl Forth {
             return Ok(());
         }
         Err(Error::StackUnderflow)
+    }
+
+    fn try_numeric(&mut self, token: &str) -> Result {
+        match token.parse::<i32>() {
+            Ok(c) => {
+                self.data.push(c);
+                return Ok(());
+            }
+            Err(_) => return Err(Error::InvalidWord),
+        }
     }
 }
