@@ -35,6 +35,7 @@ impl Forth {
                 "+" => return self.add(),
                 "-" => return self.subtract(),
                 "*" => return self.multiply(),
+                "/" => return self.divide(),
                 _ => return Err(Error::InvalidWord),
             },
         }
@@ -68,6 +69,20 @@ impl Forth {
             if let Some(second) = self.data.pop() {
                 self.data.push(first * second);
                 return Ok(());
+            }
+        }
+        Err(Error::StackUnderflow)
+    }
+
+    fn divide(&mut self) -> Result {
+        if let Some(first) = self.data.pop() {
+            if let Some(second) = self.data.pop() {
+                if first != 0 {
+                    self.data.push(second / first);
+                    return Ok(());
+                } else {
+                    return Err(Error::DivisionByZero);
+                }
             }
         }
         Err(Error::StackUnderflow)

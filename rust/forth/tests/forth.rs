@@ -110,7 +110,6 @@ mod division {
     use forth::*;
 
     #[test]
-    #[ignore]
     fn can_divide_two_numbers() {
         let mut f = Forth::new();
         assert!(f.eval("12 3 /").is_ok());
@@ -118,7 +117,6 @@ mod division {
     }
 
     #[test]
-    #[ignore]
     fn performs_integer_division() {
         let mut f = Forth::new();
         assert!(f.eval("8 3 /").is_ok());
@@ -126,28 +124,24 @@ mod division {
     }
 
     #[test]
-    #[ignore]
     fn errors_if_dividing_by_zero() {
         let mut f = Forth::new();
         assert_eq!(f.eval("4 0 /"), Err(Error::DivisionByZero));
     }
 
     #[test]
-    #[ignore]
     fn errors_if_there_is_nothing_on_the_stack() {
         let mut f = Forth::new();
         assert_eq!(f.eval("/"), Err(Error::StackUnderflow));
     }
 
     #[test]
-    #[ignore]
     fn errors_if_there_is_only_one_value_on_the_stack() {
         let mut f = Forth::new();
         assert_eq!(f.eval("1 /"), Err(Error::StackUnderflow));
     }
 
     #[test]
-    #[ignore]
     fn more_than_two_values_on_the_stack() {
         let mut f = Forth::new();
         assert!(f.eval("1 12 3 /").is_ok());
@@ -159,7 +153,6 @@ mod combined_arithmetic {
     use forth::*;
 
     #[test]
-    #[ignore]
     fn addition_and_subtraction() {
         let mut f = Forth::new();
         assert!(f.eval("1 2 + 4 -").is_ok());
@@ -167,7 +160,6 @@ mod combined_arithmetic {
     }
 
     #[test]
-    #[ignore]
     fn multiplication_and_division() {
         let mut f = Forth::new();
         assert!(f.eval("2 4 * 3 /").is_ok());
@@ -175,7 +167,6 @@ mod combined_arithmetic {
     }
 
     #[test]
-    #[ignore]
     fn multiplication_and_addition() {
         let mut f = Forth::new();
         assert!(f.eval("1 3 4 * +").is_ok());
@@ -183,7 +174,6 @@ mod combined_arithmetic {
     }
 
     #[test]
-    #[ignore]
     fn addition_and_multiplication() {
         let mut f = Forth::new();
         assert!(f.eval("1 3 4 + *").is_ok());
