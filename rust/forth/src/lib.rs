@@ -31,9 +31,22 @@ impl Forth {
     fn evaluate_token(&mut self, token: &str) -> Result {
         match token.parse::<i32>() {
             Ok(c) => self.data.push(c),
-            Err(_) => return Err(Error::StackUnderflow),
+            Err(_) => match token {
+                "+" => return self.add(),
+                _ => return Err(Error::InvalidWord),
+            },
         }
 
         Ok(())
+    }
+
+    fn add(&mut self) -> Result {
+        if let Some(first) = self.data.pop() {
+            if let Some(second) = self.data.pop() {
+                self.data.push(first + second);
+                return Ok(());
+            }
+        }
+        Err(Error::StackUnderflow)
     }
 }
