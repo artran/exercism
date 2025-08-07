@@ -233,7 +233,6 @@ mod swap {
     use forth::*;
 
     #[test]
-    #[ignore]
     fn swaps_the_top_two_values_on_the_stack_if_they_are_the_only_ones() {
         let mut f = Forth::new();
         assert!(f.eval("1 2 swap").is_ok());
@@ -241,7 +240,6 @@ mod swap {
     }
 
     #[test]
-    #[ignore]
     fn swaps_the_top_two_values_on_the_stack_if_they_are_not_the_only_ones() {
         let mut f = Forth::new();
         assert!(f.eval("1 2 3 swap").is_ok());
@@ -249,14 +247,12 @@ mod swap {
     }
 
     #[test]
-    #[ignore]
     fn errors_if_there_is_nothing_on_the_stack() {
         let mut f = Forth::new();
         assert_eq!(f.eval("swap"), Err(Error::StackUnderflow));
     }
 
     #[test]
-    #[ignore]
     fn errors_if_there_is_only_one_value_on_the_stack() {
         let mut f = Forth::new();
         assert_eq!(f.eval("1 swap"), Err(Error::StackUnderflow));

@@ -36,6 +36,7 @@ impl Forth {
             "/" => self.calculate(i32::checked_div),
             "dup" => self.dup(),
             "drop" => self.drop(),
+            "swap" => self.swap(),
             _ => self.try_numeric(token),
         }
     }
@@ -70,6 +71,17 @@ impl Forth {
     fn drop(&mut self) -> Result {
         if self.data.pop().is_some() {
             return Ok(());
+        }
+        Err(Error::StackUnderflow)
+    }
+
+    fn swap(&mut self) -> Result {
+        if let Some(first) = self.data.pop() {
+            if let Some(second) = self.data.pop() {
+                self.data.push(first);
+                self.data.push(second);
+                return Ok(());
+            }
         }
         Err(Error::StackUnderflow)
     }
