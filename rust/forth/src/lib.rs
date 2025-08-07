@@ -36,7 +36,8 @@ impl Forth {
             "/" => self.calculate(i32::checked_div),
             "dup" => self.dup(),
             "drop" => self.drop(),
-            "swap" => self.swap(),
+            "swap" => self.swap_over(false),
+            "over" => self.swap_over(true),
             _ => self.try_numeric(token),
         }
     }
@@ -75,9 +76,12 @@ impl Forth {
         Err(Error::StackUnderflow)
     }
 
-    fn swap(&mut self) -> Result {
+    fn swap_over(&mut self, over: bool) -> Result {
         if let Some(first) = self.data.pop() {
             if let Some(second) = self.data.pop() {
+                if over {
+                    self.data.push(second);
+                }
                 self.data.push(first);
                 self.data.push(second);
                 return Ok(());
@@ -90,9 +94,9 @@ impl Forth {
         match token.parse::<i32>() {
             Ok(c) => {
                 self.data.push(c);
-                return Ok(());
+                Ok(())
             }
-            Err(_) => return Err(Error::InvalidWord),
+            Err(_) => Err(Error::InvalidWord),
         }
     }
 }
