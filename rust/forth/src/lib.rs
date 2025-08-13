@@ -23,12 +23,20 @@ impl Forth {
     }
 
     pub fn eval(&mut self, input: &str) -> Result {
-        input
-            .split_whitespace()
-            .try_for_each(|token| self.evaluate_token(token))
+        let mut iter = input.split_whitespace();
+
+        while let Some(token) = iter.next() {
+            self.evaluate_token(token, &mut iter)?;
+        }
+
+        Ok(())
     }
 
-    fn evaluate_token(&mut self, token: &str) -> Result {
+    fn evaluate_token<'a>(
+        &mut self,
+        token: &'a str,
+        iter: &mut impl Iterator<Item = &'a str>,
+    ) -> Result {
         match token {
             "+" => self.calculate(i32::checked_add),
             "-" => self.calculate(i32::checked_sub),
@@ -38,6 +46,7 @@ impl Forth {
             "drop" => self.drop(),
             "swap" => self.swap_over(false),
             "over" => self.swap_over(true),
+            ":" => self.parse_definition(iter),
             _ => self.try_numeric(token),
         }
     }
@@ -98,5 +107,15 @@ impl Forth {
             }
             Err(_) => Err(Error::InvalidWord),
         }
+    }
+
+    fn parse_definition<'a>(
+        &self,
+        iter: &mut impl Iterator<Item = &'a str>,
+    ) -> std::result::Result<(), Error> {
+        while let Some(token) = iter.next() {
+            println!("{token}");
+        }
+        Ok(())
     }
 }
