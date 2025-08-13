@@ -3,9 +3,22 @@ use std::collections::HashMap;
 pub type Value = i32;
 pub type Result = std::result::Result<(), Error>;
 
+#[derive(Clone)]
+enum Op {
+    Add,
+    Sub,
+    Mul,
+    Div,
+    Dup,
+    Drop,
+    Swap,
+    Over,
+    Push(Value),
+}
+
 pub struct Forth {
     data: Vec<Value>,
-    definitions: HashMap<String, Vec<String>>,
+    definitions: HashMap<String, Vec<Op>>,
 }
 
 #[derive(Debug, PartialEq, Eq)]
@@ -43,47 +56,83 @@ impl Forth {
         token: &'a str,
         iter: &mut impl Iterator<Item = &'a str>,
     ) -> Result {
-        match token {
-            ":" => self.parse_definition(iter),
-            _ => self.execute_builtin(token),
+        if token == ":" {
+            self.parse_definition(iter)
+        } else {
+            self.execute_token(token)
         }
     }
 
-    fn parse_definition<'a>(
-        &mut self,
-        iter: &mut impl Iterator<Item = &'a str>,
-    ) -> std::result::Result<(), Error> {
-        let Some(name) = iter.next() else {
-            return Err(Error::InvalidWord);
-        };
-
-        if iter.last() != Some(";") {
+    fn parse_definition<'a>(&mut self, iter: &mut impl Iterator<Item = &'a str>) -> Result {
+        let name = iter.next().ok_or(Error::InvalidWord)?;
+        if name.parse::<Value>().is_ok() {
             return Err(Error::InvalidWord);
         }
 
-        let mut definition: Vec<String> = vec![];
-        for token in iter {
-            if token != ";" {
-                definition.push(token.to_string());
+        let mut definition_ops = Vec::new();
+        loop {
+            match iter.next() {
+                Some(";") => {
+                    self.definitions.insert(name.to_lowercase(), definition_ops);
+                    return Ok(());
+                }
+                Some(token) => {
+                    let ops = self.resolve_token(token)?;
+                    definition_ops.extend(ops);
+                }
+                None => return Err(Error::InvalidWord),
             }
         }
+    }
 
-        self.definitions.insert(name.to_string(), definition);
+    fn resolve_token(&self, token: &str) -> std::result::Result<Vec<Op>, Error> {
+        let lower_token = token.to_lowercase();
 
+        if let Some(def) = self.definitions.get(&lower_token) {
+            return Ok(def.clone());
+        }
+
+        match lower_token.as_str() {
+            "+" => return Ok(vec![Op::Add]),
+            "-" => return Ok(vec![Op::Sub]),
+            "*" => return Ok(vec![Op::Mul]),
+            "/" => return Ok(vec![Op::Div]),
+            "dup" => return Ok(vec![Op::Dup]),
+            "drop" => return Ok(vec![Op::Drop]),
+            "swap" => return Ok(vec![Op::Swap]),
+            "over" => return Ok(vec![Op::Over]),
+            _ => {}
+        }
+
+        if let Ok(val) = token.parse::<Value>() {
+            return Ok(vec![Op::Push(val)]);
+        }
+
+        Err(Error::UnknownWord)
+    }
+
+    fn execute_token(&mut self, token: &str) -> Result {
+        let ops = self.resolve_token(token)?;
+        for op in ops {
+            self.execute_op(&op)?;
+        }
         Ok(())
     }
 
-    fn execute_builtin(&mut self, token: &str) -> Result {
-        match token {
-            "+" => self.calculate(i32::checked_add),
-            "-" => self.calculate(i32::checked_sub),
-            "*" => self.calculate(i32::checked_mul),
-            "/" => self.calculate(i32::checked_div),
-            "dup" => self.dup(),
-            "drop" => self.drop(),
-            "swap" => self.swap_over(false),
-            "over" => self.swap_over(true),
-            _ => self.try_numeric(token),
+    fn execute_op(&mut self, op: &Op) -> Result {
+        match op {
+            Op::Add => self.calculate(i32::checked_add),
+            Op::Sub => self.calculate(i32::checked_sub),
+            Op::Mul => self.calculate(i32::checked_mul),
+            Op::Div => self.calculate(i32::checked_div),
+            Op::Dup => self.dup(),
+            Op::Drop => self.drop(),
+            Op::Swap => self.swap_over(false),
+            Op::Over => self.swap_over(true),
+            Op::Push(val) => {
+                self.data.push(*val);
+                Ok(())
+            }
         }
     }
 
@@ -133,15 +182,5 @@ impl Forth {
             }
         }
         Err(Error::StackUnderflow)
-    }
-
-    fn try_numeric(&mut self, token: &str) -> Result {
-        match token.parse::<i32>() {
-            Ok(c) => {
-                self.data.push(c);
-                Ok(())
-            }
-            Err(_) => Err(Error::InvalidWord),
-        }
     }
 }

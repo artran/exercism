@@ -293,7 +293,6 @@ mod user_defined_words {
     use forth::*;
 
     #[test]
-    #[ignore]
     fn can_consist_of_built_in_words() {
         let mut f = Forth::new();
         assert!(f.eval(": dup-twice dup dup ;").is_ok());
@@ -302,7 +301,6 @@ mod user_defined_words {
     }
 
     #[test]
-    #[ignore]
     fn execute_in_the_right_order() {
         let mut f = Forth::new();
         assert!(f.eval(": countup 1 2 3 ;").is_ok());
@@ -311,7 +309,6 @@ mod user_defined_words {
     }
 
     #[test]
-    #[ignore]
     fn can_override_other_user_defined_words() {
         let mut f = Forth::new();
         assert!(f.eval(": foo dup ;").is_ok());
@@ -321,7 +318,6 @@ mod user_defined_words {
     }
 
     #[test]
-    #[ignore]
     fn can_override_built_in_words() {
         let mut f = Forth::new();
         assert!(f.eval(": swap dup ;").is_ok());
@@ -330,7 +326,6 @@ mod user_defined_words {
     }
 
     #[test]
-    #[ignore]
     fn can_override_built_in_operators() {
         let mut f = Forth::new();
         assert!(f.eval(": + * ;").is_ok());
@@ -339,7 +334,6 @@ mod user_defined_words {
     }
 
     #[test]
-    #[ignore]
     fn can_use_different_words_with_the_same_name() {
         let mut f = Forth::new();
         assert!(f.eval(": foo 5 ;").is_ok());
@@ -350,7 +344,6 @@ mod user_defined_words {
     }
 
     #[test]
-    #[ignore]
     fn can_define_word_that_uses_word_with_the_same_name() {
         let mut f = Forth::new();
         assert!(f.eval(": foo 10 ;").is_ok());
@@ -360,28 +353,24 @@ mod user_defined_words {
     }
 
     #[test]
-    #[ignore]
     fn cannot_redefine_non_negative_numbers() {
         let mut f = Forth::new();
         assert_eq!(f.eval(": 1 2 ;"), Err(Error::InvalidWord));
     }
 
     #[test]
-    #[ignore]
     fn cannot_redefine_negative_numbers() {
         let mut f = Forth::new();
         assert_eq!(f.eval(": -1 2 ;"), Err(Error::InvalidWord));
     }
 
     #[test]
-    #[ignore]
     fn errors_if_executing_a_non_existent_word() {
         let mut f = Forth::new();
         assert_eq!(f.eval("foo"), Err(Error::UnknownWord));
     }
 
     #[test]
-    #[ignore]
     fn only_defines_locally() {
         let mut f = Forth::new();
         assert!(f.eval(": + - ;").is_ok());
@@ -397,7 +386,6 @@ mod case_insensitivity {
     use forth::*;
 
     #[test]
-    #[ignore]
     fn dup_is_case_insensitive() {
         let mut f = Forth::new();
         assert!(f.eval("1 DUP Dup dup").is_ok());
@@ -405,7 +393,6 @@ mod case_insensitivity {
     }
 
     #[test]
-    #[ignore]
     fn drop_is_case_insensitive() {
         let mut f = Forth::new();
         assert!(f.eval("1 2 3 4 DROP Drop drop").is_ok());
@@ -413,7 +400,6 @@ mod case_insensitivity {
     }
 
     #[test]
-    #[ignore]
     fn swap_is_case_insensitive() {
         let mut f = Forth::new();
         assert!(f.eval("1 2 SWAP 3 Swap 4 swap").is_ok());
@@ -421,7 +407,6 @@ mod case_insensitivity {
     }
 
     #[test]
-    #[ignore]
     fn over_is_case_insensitive() {
         let mut f = Forth::new();
         assert!(f.eval("1 2 OVER Over over").is_ok());
@@ -429,7 +414,6 @@ mod case_insensitivity {
     }
 
     #[test]
-    #[ignore]
     fn user_defined_words_are_case_insensitive() {
         let mut f = Forth::new();
         assert!(f.eval(": foo dup ;").is_ok());
@@ -438,7 +422,6 @@ mod case_insensitivity {
     }
 
     #[test]
-    #[ignore]
     fn definitions_are_case_insensitive() {
         let mut f = Forth::new();
         assert!(f.eval(": SWAP DUP Dup dup ;").is_ok());
