@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::rc::Rc;
 
 pub type Value = i32;
 pub type Result = std::result::Result<(), Error>;
@@ -14,11 +15,12 @@ enum Op {
     Swap,
     Over,
     Push(Value),
+    Word(Rc<[Op]>),
 }
 
 pub struct Forth {
     data: Vec<Value>,
-    definitions: HashMap<String, Vec<Op>>,
+    definitions: HashMap<String, Rc<[Op]>>,
 }
 
 #[derive(Debug, PartialEq, Eq)]
@@ -45,22 +47,15 @@ impl Forth {
         let mut iter = input.split_whitespace();
 
         while let Some(token) = iter.next() {
-            self.evaluate_token(token, &mut iter)?;
+            if token == ":" {
+                self.parse_definition(&mut iter)?;
+            } else {
+                let op = self.token_to_op(token)?;
+                self.execute_op(&op)?;
+            }
         }
 
         Ok(())
-    }
-
-    fn evaluate_token<'a>(
-        &mut self,
-        token: &'a str,
-        iter: &mut impl Iterator<Item = &'a str>,
-    ) -> Result {
-        if token == ":" {
-            self.parse_definition(iter)
-        } else {
-            self.execute_token(token)
-        }
     }
 
     fn parse_definition<'a>(&mut self, iter: &mut impl Iterator<Item = &'a str>) -> Result {
@@ -73,50 +68,41 @@ impl Forth {
         loop {
             match iter.next() {
                 Some(";") => {
-                    self.definitions.insert(name.to_lowercase(), definition_ops);
+                    self.definitions
+                        .insert(name.to_lowercase(), definition_ops.into());
                     return Ok(());
                 }
                 Some(token) => {
-                    let ops = self.resolve_token(token)?;
-                    definition_ops.extend(ops);
+                    definition_ops.push(self.token_to_op(token)?);
                 }
                 None => return Err(Error::InvalidWord),
             }
         }
     }
 
-    fn resolve_token(&self, token: &str) -> std::result::Result<Vec<Op>, Error> {
+    fn token_to_op(&self, token: &str) -> std::result::Result<Op, Error> {
         let lower_token = token.to_lowercase();
-
         if let Some(def) = self.definitions.get(&lower_token) {
-            return Ok(def.clone());
+            return Ok(Op::Word(def.clone()));
         }
 
         match lower_token.as_str() {
-            "+" => return Ok(vec![Op::Add]),
-            "-" => return Ok(vec![Op::Sub]),
-            "*" => return Ok(vec![Op::Mul]),
-            "/" => return Ok(vec![Op::Div]),
-            "dup" => return Ok(vec![Op::Dup]),
-            "drop" => return Ok(vec![Op::Drop]),
-            "swap" => return Ok(vec![Op::Swap]),
-            "over" => return Ok(vec![Op::Over]),
-            _ => {}
+            "+" => Ok(Op::Add),
+            "-" => Ok(Op::Sub),
+            "*" => Ok(Op::Mul),
+            "/" => Ok(Op::Div),
+            "dup" => Ok(Op::Dup),
+            "drop" => Ok(Op::Drop),
+            "swap" => Ok(Op::Swap),
+            "over" => Ok(Op::Over),
+            _ => {
+                if let Ok(val) = token.parse::<Value>() {
+                    Ok(Op::Push(val))
+                } else {
+                    Err(Error::UnknownWord)
+                }
+            }
         }
-
-        if let Ok(val) = token.parse::<Value>() {
-            return Ok(vec![Op::Push(val)]);
-        }
-
-        Err(Error::UnknownWord)
-    }
-
-    fn execute_token(&mut self, token: &str) -> Result {
-        let ops = self.resolve_token(token)?;
-        for op in ops {
-            self.execute_op(&op)?;
-        }
-        Ok(())
     }
 
     fn execute_op(&mut self, op: &Op) -> Result {
@@ -133,6 +119,12 @@ impl Forth {
                 self.data.push(*val);
                 Ok(())
             }
+            Op::Word(def) => {
+                for inner_op in def.iter() {
+                    self.execute_op(inner_op)?;
+                }
+                Ok(())
+            }
         }
     }
 
@@ -140,34 +132,39 @@ impl Forth {
     where
         F: Fn(i32, i32) -> Option<i32>,
     {
-        if let Some(first) = self.data.pop() {
-            if let Some(second) = self.data.pop() {
-                if let Some(result) = operation(second, first) {
+        if let Some(b) = self.data.pop() {
+            if let Some(a) = self.data.pop() {
+                if let Some(result) = operation(a, b) {
                     self.data.push(result);
                     return Ok(());
                 } else {
-                    // Only handling DivisionByZero because that is all required
+                    self.data.push(a);
+                    self.data.push(b);
                     return Err(Error::DivisionByZero);
                 }
+            } else {
+                self.data.push(b);
+                return Err(Error::StackUnderflow);
             }
         }
         Err(Error::StackUnderflow)
     }
 
     fn dup(&mut self) -> Result {
-        if let Some(first) = self.data.pop() {
-            self.data.push(first);
-            self.data.push(first);
-            return Ok(());
+        if let Some(val) = self.data.last() {
+            self.data.push(*val);
+            Ok(())
+        } else {
+            Err(Error::StackUnderflow)
         }
-        Err(Error::StackUnderflow)
     }
 
     fn drop(&mut self) -> Result {
         if self.data.pop().is_some() {
-            return Ok(());
+            Ok(())
+        } else {
+            Err(Error::StackUnderflow)
         }
-        Err(Error::StackUnderflow)
     }
 
     fn swap_over(&mut self, over: bool) -> Result {
