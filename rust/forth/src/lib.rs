@@ -1,8 +1,11 @@
+use std::collections::HashMap;
+
 pub type Value = i32;
 pub type Result = std::result::Result<(), Error>;
 
 pub struct Forth {
     data: Vec<Value>,
+    definitions: HashMap<String, Vec<String>>,
 }
 
 #[derive(Debug, PartialEq, Eq)]
@@ -15,7 +18,10 @@ pub enum Error {
 
 impl Forth {
     pub fn new() -> Forth {
-        Forth { data: Vec::new() }
+        Forth {
+            data: Vec::new(),
+            definitions: HashMap::new(),
+        }
     }
 
     pub fn stack(&self) -> &[Value] {
@@ -38,6 +44,37 @@ impl Forth {
         iter: &mut impl Iterator<Item = &'a str>,
     ) -> Result {
         match token {
+            ":" => self.parse_definition(iter),
+            _ => self.execute_builtin(token),
+        }
+    }
+
+    fn parse_definition<'a>(
+        &mut self,
+        iter: &mut impl Iterator<Item = &'a str>,
+    ) -> std::result::Result<(), Error> {
+        let Some(name) = iter.next() else {
+            return Err(Error::InvalidWord);
+        };
+
+        if iter.last() != Some(";") {
+            return Err(Error::InvalidWord);
+        }
+
+        let mut definition: Vec<String> = vec![];
+        for token in iter {
+            if token != ";" {
+                definition.push(token.to_string());
+            }
+        }
+
+        self.definitions.insert(name.to_string(), definition);
+
+        Ok(())
+    }
+
+    fn execute_builtin(&mut self, token: &str) -> Result {
+        match token {
             "+" => self.calculate(i32::checked_add),
             "-" => self.calculate(i32::checked_sub),
             "*" => self.calculate(i32::checked_mul),
@@ -46,7 +83,6 @@ impl Forth {
             "drop" => self.drop(),
             "swap" => self.swap_over(false),
             "over" => self.swap_over(true),
-            ":" => self.parse_definition(iter),
             _ => self.try_numeric(token),
         }
     }
@@ -107,15 +143,5 @@ impl Forth {
             }
             Err(_) => Err(Error::InvalidWord),
         }
-    }
-
-    fn parse_definition<'a>(
-        &self,
-        iter: &mut impl Iterator<Item = &'a str>,
-    ) -> std::result::Result<(), Error> {
-        while let Some(token) = iter.next() {
-            println!("{token}");
-        }
-        Ok(())
     }
 }
