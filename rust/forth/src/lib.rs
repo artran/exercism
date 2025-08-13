@@ -107,10 +107,10 @@ impl Forth {
 
     fn execute_op(&mut self, op: &Op) -> Result {
         match op {
-            Op::Add => self.calculate(i32::checked_add),
-            Op::Sub => self.calculate(i32::checked_sub),
-            Op::Mul => self.calculate(i32::checked_mul),
-            Op::Div => self.calculate(i32::checked_div),
+            Op::Add => self.calculate(Value::checked_add),
+            Op::Sub => self.calculate(Value::checked_sub),
+            Op::Mul => self.calculate(Value::checked_mul),
+            Op::Div => self.calculate(Value::checked_div),
             Op::Dup => self.dup(),
             Op::Drop => self.drop(),
             Op::Swap => self.swap_over(false),
@@ -130,7 +130,7 @@ impl Forth {
 
     fn calculate<F>(&mut self, operation: F) -> Result
     where
-        F: Fn(i32, i32) -> Option<i32>,
+        F: Fn(Value, Value) -> Option<Value>,
     {
         if let Some(b) = self.data.pop() {
             if let Some(a) = self.data.pop() {
@@ -168,13 +168,15 @@ impl Forth {
     }
 
     fn swap_over(&mut self, over: bool) -> Result {
-        if let Some(first) = self.data.pop() {
-            if let Some(second) = self.data.pop() {
+        if let Some(last) = self.data.pop() {
+            if let Some(second_to_last) = self.data.pop() {
                 if over {
-                    self.data.push(second);
+                    // Put second_to_last back
+                    self.data.push(second_to_last);
                 }
-                self.data.push(first);
-                self.data.push(second);
+                // Put last and second_to_last back in swapped order
+                self.data.push(last);
+                self.data.push(second_to_last);
                 return Ok(());
             }
         }
