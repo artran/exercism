@@ -2,9 +2,6 @@ use std::ops::Rem;
 
 type Predicate<'a, T> = Box<dyn Fn(T) -> bool + 'a>;
 
-// the PhantomData instances in this file are just to stop compiler complaints
-// about missing generics; feel free to remove them
-
 /// A Matcher is a single rule of fizzbuzz: given a function on T, should
 /// a word be substituted in? If yes, which word?
 pub struct Matcher<'a, T> {
@@ -12,7 +9,10 @@ pub struct Matcher<'a, T> {
     subs: String,
 }
 
-impl<'a, T> Matcher<'a, T> {
+impl<'a, T> Matcher<'a, T>
+where
+    T: ToString + Copy,
+{
     pub fn new<F, S>(matcher: F, subs: S) -> Matcher<'a, T>
     where
         F: Fn(T) -> bool + 'a,
@@ -21,6 +21,14 @@ impl<'a, T> Matcher<'a, T> {
         Self {
             matcher: Box::new(matcher),
             subs: subs.to_string(),
+        }
+    }
+
+    pub fn apply(&self, value: T) -> Option<String> {
+        if (self.matcher)(value) {
+            Some(self.subs.clone())
+        } else {
+            None
         }
     }
 }
@@ -38,7 +46,7 @@ pub struct Fizzy<'a, T> {
     matchers: Vec<Matcher<'a, T>>,
 }
 
-impl<'a, T> Fizzy<'a, T> {
+impl<'a, T: ToString> Fizzy<'a, T> {
     pub fn new() -> Self {
         Fizzy {
             matchers: Vec::new(),
@@ -53,17 +61,22 @@ impl<'a, T> Fizzy<'a, T> {
     }
 
     /// map this fizzy onto every element of an iterator, returning a new iterator
-    pub fn apply<I>(self, _iter: I) -> impl Iterator<Item = String> {
-        // todo!() doesn't actually work, here; () is not an Iterator
-        // that said, this is probably not the actual implementation you desire
-        Vec::new().into_iter()
+    pub fn apply<I>(self, iter: I) -> impl Iterator<Item = String>
+    where
+        I: Iterator<Item = T>,
+    {
+        iter.map(move |item| self.process(item))
+    }
+
+    fn process(&self, item: T) -> String {
+        item.to_string()
     }
 }
 
 /// convenience function: return a Fizzy which applies the standard fizz-buzz rules
 pub fn fizz_buzz<'a, T>() -> Fizzy<'a, T>
 where
-    T: Rem<Output = T> + PartialEq<T> + From<u8>,
+    T: Rem<Output = T> + PartialEq<T> + From<u8> + ToString + Copy,
 {
     Fizzy::new()
         .add_matcher(Matcher::new(|n: T| n % T::from(3) == T::from(0), "fizz"))
