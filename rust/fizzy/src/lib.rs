@@ -1,13 +1,27 @@
+use std::ops::Rem;
+
+type Predicate<T> = Box<dyn Fn(T) -> bool>;
+
 // the PhantomData instances in this file are just to stop compiler complaints
 // about missing generics; feel free to remove them
 
 /// A Matcher is a single rule of fizzbuzz: given a function on T, should
 /// a word be substituted in? If yes, which word?
-pub struct Matcher<T>(std::marker::PhantomData<T>);
+pub struct Matcher<T> {
+    matcher: Predicate<T>,
+    subs: String,
+}
 
 impl<T> Matcher<T> {
-    pub fn new<F, S>(_matcher: F, _subs: S) -> Matcher<T> {
-        todo!()
+    pub fn new<F, S>(matcher: F, subs: S) -> Matcher<T>
+    where
+        F: Fn(T) -> bool,
+        S: ToString,
+    {
+        Self {
+            matcher: Box::new(matcher),
+            subs: subs.to_string(),
+        }
     }
 }
 
@@ -42,6 +56,11 @@ impl<T> Fizzy<T> {
 }
 
 /// convenience function: return a Fizzy which applies the standard fizz-buzz rules
-pub fn fizz_buzz<T>() -> Fizzy<T> {
-    todo!()
+pub fn fizz_buzz<T>() -> Fizzy<T>
+where
+    T: Rem<Output = T> + PartialEq<T> + From<u8>,
+{
+    Fizzy::new()
+        .add_matcher(Matcher::new(|n: T| n % T::from(3) == T::from(0), "fizz"))
+        .add_matcher(Matcher::new(|n: T| n % T::from(5) == T::from(0), "buzz"))
 }
