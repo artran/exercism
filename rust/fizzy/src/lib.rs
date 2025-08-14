@@ -34,17 +34,22 @@ impl<'a, T> Matcher<'a, T> {
 /// here because it's a simpler interface for students to implement.
 ///
 /// Also, it's a good excuse to try out using impl trait.
-pub struct Fizzy<T>(std::marker::PhantomData<T>);
+pub struct Fizzy<'a, T> {
+    matchers: Vec<Matcher<'a, T>>,
+}
 
-impl<T> Fizzy<T> {
+impl<'a, T> Fizzy<'a, T> {
     pub fn new() -> Self {
-        todo!()
+        Fizzy {
+            matchers: Vec::new(),
+        }
     }
 
     // feel free to change the signature to `mut self` if you like
     #[must_use]
-    pub fn add_matcher(self, _matcher: Matcher<T>) -> Self {
-        todo!()
+    pub fn add_matcher(mut self, matcher: Matcher<'a, T>) -> Self {
+        self.matchers.push(matcher);
+        self
     }
 
     /// map this fizzy onto every element of an iterator, returning a new iterator
@@ -56,7 +61,7 @@ impl<T> Fizzy<T> {
 }
 
 /// convenience function: return a Fizzy which applies the standard fizz-buzz rules
-pub fn fizz_buzz<T>() -> Fizzy<T>
+pub fn fizz_buzz<'a, T>() -> Fizzy<'a, T>
 where
     T: Rem<Output = T> + PartialEq<T> + From<u8>,
 {
