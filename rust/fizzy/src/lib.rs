@@ -1,21 +1,21 @@
 use std::ops::Rem;
 
-type Predicate<T> = Box<dyn Fn(T) -> bool>;
+type Predicate<'a, T> = Box<dyn Fn(T) -> bool + 'a>;
 
 // the PhantomData instances in this file are just to stop compiler complaints
 // about missing generics; feel free to remove them
 
 /// A Matcher is a single rule of fizzbuzz: given a function on T, should
 /// a word be substituted in? If yes, which word?
-pub struct Matcher<T> {
-    matcher: Predicate<T>,
+pub struct Matcher<'a, T> {
+    matcher: Predicate<'a, T>,
     subs: String,
 }
 
-impl<T> Matcher<T> {
-    pub fn new<F, S>(matcher: F, subs: S) -> Matcher<T>
+impl<'a, T> Matcher<'a, T> {
+    pub fn new<F, S>(matcher: F, subs: S) -> Matcher<'a, T>
     where
-        F: Fn(T) -> bool,
+        F: Fn(T) -> bool + 'a,
         S: ToString,
     {
         Self {
