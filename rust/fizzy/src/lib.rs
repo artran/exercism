@@ -24,11 +24,11 @@ where
         }
     }
 
-    pub fn apply(&self, value: T) -> Option<String> {
+    pub fn apply(&self, value: T) -> String {
         if (self.matcher)(value) {
-            Some(self.subs.clone())
+            self.subs.clone()
         } else {
-            None
+            String::new()
         }
     }
 }
@@ -46,7 +46,10 @@ pub struct Fizzy<'a, T> {
     matchers: Vec<Matcher<'a, T>>,
 }
 
-impl<'a, T: ToString> Fizzy<'a, T> {
+impl<'a, T: ToString> Fizzy<'a, T>
+where
+    T: ToString + Copy,
+{
     pub fn new() -> Self {
         Fizzy {
             matchers: Vec::new(),
@@ -69,7 +72,17 @@ impl<'a, T: ToString> Fizzy<'a, T> {
     }
 
     fn process(&self, item: T) -> String {
-        item.to_string()
+        let result = self
+            .matchers
+            .iter()
+            .map(|m| m.apply(item))
+            .collect::<String>();
+
+        if result.is_empty() {
+            return item.to_string();
+        }
+
+        result
     }
 }
 
