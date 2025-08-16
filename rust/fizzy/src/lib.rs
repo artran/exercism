@@ -13,13 +13,13 @@ impl<'a, T> Matcher<'a, T>
 where
     T: ToString + Copy,
 {
-    pub fn new<F, S>(matcher: F, subs: S) -> Matcher<'a, T>
+    pub fn new<F, S>(match_fn: F, subs: S) -> Matcher<'a, T>
     where
         F: Fn(T) -> bool + 'a,
         S: ToString,
     {
         Self {
-            predicate: Box::new(matcher),
+            predicate: Box::new(match_fn),
             subs: subs.to_string(),
         }
     }
