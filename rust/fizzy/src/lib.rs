@@ -5,7 +5,7 @@ type Predicate<'a, T> = Box<dyn Fn(T) -> bool + 'a>;
 /// A Matcher is a single rule of fizzbuzz: given a function on T, should
 /// a word be substituted in? If yes, which word?
 pub struct Matcher<'a, T> {
-    matcher: Predicate<'a, T>,
+    predicate: Predicate<'a, T>,
     subs: String,
 }
 
@@ -19,16 +19,16 @@ where
         S: ToString,
     {
         Self {
-            matcher: Box::new(matcher),
+            predicate: Box::new(matcher),
             subs: subs.to_string(),
         }
     }
 
-    pub fn apply(&self, value: T) -> String {
-        if (self.matcher)(value) {
-            self.subs.clone()
+    pub fn apply(&self, value: T) -> Option<&str> {
+        if (self.predicate)(value) {
+            Some(&self.subs)
         } else {
-            String::new()
+            None
         }
     }
 }
@@ -46,17 +46,25 @@ pub struct Fizzy<'a, T> {
     matchers: Vec<Matcher<'a, T>>,
 }
 
+// Constructors - no need for constraints on <T> here
+impl<'a, T> Default for Fizzy<'a, T> {
+    fn default() -> Self {
+        Self {
+            matchers: Default::default(),
+        }
+    }
+}
+
+impl<'a, T> Fizzy<'a, T> {
+    pub fn new() -> Self {
+        Fizzy::default()
+    }
+}
+
 impl<'a, T: ToString> Fizzy<'a, T>
 where
     T: ToString + Copy,
 {
-    pub fn new() -> Self {
-        Fizzy {
-            matchers: Vec::new(),
-        }
-    }
-
-    // feel free to change the signature to `mut self` if you like
     #[must_use]
     pub fn add_matcher(mut self, matcher: Matcher<'a, T>) -> Self {
         self.matchers.push(matcher);
@@ -75,7 +83,7 @@ where
         let result = self
             .matchers
             .iter()
-            .map(|m| m.apply(item))
+            .filter_map(|m| m.apply(item))
             .collect::<String>();
 
         if result.is_empty() {
@@ -91,7 +99,7 @@ pub fn fizz_buzz<'a, T>() -> Fizzy<'a, T>
 where
     T: Rem<Output = T> + PartialEq<T> + From<u8> + ToString + Copy,
 {
-    Fizzy::new()
+    Fizzy::default()
         .add_matcher(Matcher::new(|n: T| n % T::from(3) == T::from(0), "fizz"))
         .add_matcher(Matcher::new(|n: T| n % T::from(5) == T::from(0), "buzz"))
 }
