@@ -42,7 +42,7 @@ impl<T: Copy> SimpleLinkedList<T> {
     }
 
     pub fn peek(&self) -> Option<&T> {
-        todo!()
+        self.head.as_ref().map(|node| &node.value)
     }
 
     #[must_use]
