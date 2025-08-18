@@ -1,23 +1,16 @@
-use std::rc::Rc;
-
 pub struct SimpleLinkedList<T: Copy> {
-    head: Option<Rc<LinkedListNode<T>>>,
-    tail: Option<Rc<LinkedListNode<T>>>,
+    head: Option<Box<Node<T>>>,
     len: usize,
 }
 
-pub struct LinkedListNode<T: Copy> {
+pub struct Node<T: Copy> {
     value: T,
-    next: Option<Rc<LinkedListNode<T>>>,
+    next: Option<Box<Node<T>>>,
 }
 
 impl<T: Copy> SimpleLinkedList<T> {
     pub fn new() -> Self {
-        Self {
-            head: None,
-            tail: None,
-            len: 0,
-        }
+        Self { head: None, len: 0 }
     }
 
     pub fn is_empty(&self) -> bool {
@@ -29,13 +22,23 @@ impl<T: Copy> SimpleLinkedList<T> {
     }
 
     pub fn push(&mut self, value: T) {
-        let new_node = LinkedListNode { value, next: None };
+        let new_node = Node {
+            value,
+            next: self.head.take(),
+        };
+        self.head = Some(Box::new(new_node));
         self.len += 1;
     }
 
     pub fn pop(&mut self) -> Option<T> {
-        self.len -= 1;
-        None
+        match self.head.take() {
+            None => None,
+            Some(node) => {
+                self.len -= 1;
+                self.head = node.next;
+                Some(node.value)
+            }
+        }
     }
 
     pub fn peek(&self) -> Option<&T> {
