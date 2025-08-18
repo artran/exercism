@@ -1,12 +1,18 @@
-pub struct SimpleLinkedList<T> {
-    // Delete this field
-    // dummy is needed to avoid unused parameter error during compilation
-    dummy: ::std::marker::PhantomData<T>,
+use std::rc::Rc;
+
+pub struct SimpleLinkedList<T: Copy> {
+    head: Option<Rc<LinkedListNode<T>>>,
+    len: usize,
 }
 
-impl<T> SimpleLinkedList<T> {
+pub struct LinkedListNode<T: Copy> {
+    value: T,
+    next: Option<Rc<LinkedListNode<T>>>,
+}
+
+impl<T: Copy> SimpleLinkedList<T> {
     pub fn new() -> Self {
-        todo!()
+        Self { head: None, len: 0 }
     }
 
     // You may be wondering why it's necessary to have is_empty()
@@ -19,7 +25,7 @@ impl<T> SimpleLinkedList<T> {
     }
 
     pub fn len(&self) -> usize {
-        todo!()
+        self.len
     }
 
     pub fn push(&mut self, _element: T) {
@@ -40,7 +46,7 @@ impl<T> SimpleLinkedList<T> {
     }
 }
 
-impl<T> FromIterator<T> for SimpleLinkedList<T> {
+impl<T: Copy> FromIterator<T> for SimpleLinkedList<T> {
     fn from_iter<I: IntoIterator<Item = T>>(_iter: I) -> Self {
         todo!()
     }
@@ -57,7 +63,7 @@ impl<T> FromIterator<T> for SimpleLinkedList<T> {
 // Please note that the "front" of the linked list should correspond to the "back"
 // of the vector as far as the tests are concerned.
 
-impl<T> From<SimpleLinkedList<T>> for Vec<T> {
+impl<T: Copy> From<SimpleLinkedList<T>> for Vec<T> {
     fn from(mut _linked_list: SimpleLinkedList<T>) -> Vec<T> {
         todo!()
     }
