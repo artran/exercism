@@ -1,14 +1,14 @@
-pub struct SimpleLinkedList<T: Copy> {
+pub struct SimpleLinkedList<T> {
     head: Option<Box<Node<T>>>,
     len: usize,
 }
 
-pub struct Node<T: Copy> {
+pub struct Node<T> {
     value: T,
     next: Option<Box<Node<T>>>,
 }
 
-impl<T: Copy> SimpleLinkedList<T> {
+impl<T> SimpleLinkedList<T> {
     pub fn new() -> Self {
         Self { head: None, len: 0 }
     }
@@ -55,7 +55,7 @@ impl<T: Copy> SimpleLinkedList<T> {
     }
 }
 
-impl<T: Copy> FromIterator<T> for SimpleLinkedList<T> {
+impl<T> FromIterator<T> for SimpleLinkedList<T> {
     fn from_iter<I: IntoIterator<Item = T>>(iter: I) -> Self {
         let mut result = SimpleLinkedList::new();
         for value in iter {
@@ -76,7 +76,7 @@ impl<T: Copy> FromIterator<T> for SimpleLinkedList<T> {
 // Please note that the "front" of the linked list should correspond to the "back"
 // of the vector as far as the tests are concerned.
 
-impl<T: Copy> From<SimpleLinkedList<T>> for Vec<T> {
+impl<T> From<SimpleLinkedList<T>> for Vec<T> {
     fn from(mut linked_list: SimpleLinkedList<T>) -> Vec<T> {
         let mut result = Vec::new();
         while let Some(value) = linked_list.pop() {
