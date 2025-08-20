@@ -77,7 +77,13 @@ impl<T: Copy> FromIterator<T> for SimpleLinkedList<T> {
 // of the vector as far as the tests are concerned.
 
 impl<T: Copy> From<SimpleLinkedList<T>> for Vec<T> {
-    fn from(mut _linked_list: SimpleLinkedList<T>) -> Vec<T> {
-        todo!()
+    fn from(mut linked_list: SimpleLinkedList<T>) -> Vec<T> {
+        let mut result = Vec::new();
+        while let Some(value) = linked_list.pop() {
+            result.push(value);
+        }
+        result.reverse();
+
+        result
     }
 }
