@@ -46,8 +46,12 @@ impl<T: Copy> SimpleLinkedList<T> {
     }
 
     #[must_use]
-    pub fn rev(self) -> SimpleLinkedList<T> {
-        todo!()
+    pub fn rev(mut self) -> SimpleLinkedList<T> {
+        let mut result = SimpleLinkedList::new();
+        while let Some(value) = self.pop() {
+            result.push(value);
+        }
+        result
     }
 }
 

@@ -88,7 +88,6 @@ fn from_slice() {
 }
 
 #[test]
-#[ignore]
 fn reverse() {
     let mut list: SimpleLinkedList<u32> = SimpleLinkedList::new();
     list.push(1);
