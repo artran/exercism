@@ -37,14 +37,11 @@ impl<T> SimpleLinkedList<T> {
     }
 
     pub fn pop(&mut self) -> Option<T> {
-        match self.head.take() {
-            None => None,
-            Some(node) => {
-                self.len -= 1;
-                self.head = node.next;
-                Some(node.value)
-            }
-        }
+        self.head.take().map(|node| {
+            self.len -= 1;
+            self.head = node.next;
+            node.value
+        })
     }
 
     pub fn peek(&self) -> Option<&T> {
