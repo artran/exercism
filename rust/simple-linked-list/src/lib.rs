@@ -8,9 +8,15 @@ pub struct Node<T> {
     next: Option<Box<Node<T>>>,
 }
 
+impl<T> Default for SimpleLinkedList<T> {
+    fn default() -> Self {
+        Self { head: None, len: 0 }
+    }
+}
+
 impl<T> SimpleLinkedList<T> {
     pub fn new() -> Self {
-        Self { head: None, len: 0 }
+        Self::default()
     }
 
     pub fn is_empty(&self) -> bool {
