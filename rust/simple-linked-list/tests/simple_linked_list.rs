@@ -78,7 +78,6 @@ fn peek_returns_reference_to_head_element_but_does_not_remove_it() {
 }
 
 #[test]
-#[ignore]
 fn from_slice() {
     let mut array = vec!["1", "2", "3", "4"];
     let mut list: SimpleLinkedList<_> = array.drain(..).collect();
